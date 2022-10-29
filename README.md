@@ -33,6 +33,14 @@ Hacky program that uses baresip, ffmpeg and pulse to dial a contact and inject a
 Work in progress. No tests, no dockerfile. Hacked together with very limited
 time.
 
+
+## Warning
+
+**WARNING: Make sure to double-check the contact that is dialed if you run
+`/dialcontact` so you do not perform calls that may cost you money. If
+possible, block outgoing calls in your SIP provider. I do not take any
+responsibility for costs that occure using this program. Use at your own risk!**
+
 ## How does it work
 
 ```

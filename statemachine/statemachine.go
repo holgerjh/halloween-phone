@@ -1,5 +1,7 @@
 package statemachine
 
+// Simple finite state machine implementation
+
 import (
 	"fmt"
 	"log"
@@ -82,7 +84,6 @@ func (s *Statemachine) Run() error {
 		log.Printf("[Statemachine %s] Condition %d fulfilled, moving to node %s", s.Name, chosen, nextNode.Name)
 		currentNode = nextNode
 	}
-	return nil
 }
 
 func (s *Statemachine) AddNode(n *Node) {

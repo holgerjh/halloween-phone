@@ -1,16 +1,16 @@
 package player
 
 import (
-	"github.com/holgerjh/halloween-phone/config"
-	"github.com/holgerjh/halloween-phone/tracks"
 	"log"
 	"math/rand"
 	"time"
+
+	"github.com/holgerjh/halloween-phone/config"
+	"github.com/holgerjh/halloween-phone/tracks"
 )
 
+// Loop scheudles tracks for playing until the shutdown channel gets closed
 func Loop(micFile string, db *tracks.TrackDB, cfg *config.Config, shutdown <-chan int) {
-	//playTrack(micFile, db.FilterForEarliestTracks()[0], &cfg.Mic)
-	//return
 	if len(*db) == 0 {
 		panic("db has no tracks!")
 	}

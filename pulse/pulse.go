@@ -2,11 +2,12 @@ package pulse
 
 import (
 	"fmt"
-	"github.com/lawl/pulseaudio"
 	"log"
 	"os"
 	"os/user"
 	"path/filepath"
+
+	"github.com/lawl/pulseaudio"
 )
 
 type PulseMicConfig struct {
@@ -72,6 +73,7 @@ type PulseData struct {
 	VirtualMicPath string
 }
 
+// SetupPulseDevice creates and registers a virtual microphone
 func SetupPulseDevice(config PulseMicConfig) (*PulseData, error) {
 	config.fillDefaults()
 
@@ -104,6 +106,7 @@ func SetupPulseDevice(config PulseMicConfig) (*PulseData, error) {
 	}, nil
 }
 
+// UnloadPulse unloads and deletes an existing virtual microphone
 func UnloadPulse(data *PulseData, config PulseMicConfig) error {
 	config.fillDefaults()
 	client, err := config.connect()

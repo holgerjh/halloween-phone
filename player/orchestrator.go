@@ -1,11 +1,12 @@
 package player
 
 import (
+	"log"
+	"time"
+
 	"github.com/holgerjh/halloween-phone/pulse"
 	"github.com/holgerjh/halloween-phone/statemachine"
 	"github.com/holgerjh/halloween-phone/tracks"
-	"log"
-	"time"
 )
 
 const MAX_RING_TIME = 10
@@ -24,7 +25,7 @@ func playTrack(micFile string, t *tracks.Track, silenceStartOfCall int, cfg *pul
 
 	// setup async ffmpeg conversion
 
-	ffmpegTerminated, err := pipeThroughFFMPEG(micFile, t.Path, cfg, startPlayFFMPEG, terminateFFMPEG)
+	ffmpegTerminated, err := PipeThroughFFMPEG(micFile, t.Path, cfg, startPlayFFMPEG, terminateFFMPEG)
 	if err != nil {
 		log.Printf("Unable to start ffmpeg")
 		return err
@@ -40,8 +41,6 @@ func playTrack(micFile string, t *tracks.Track, silenceStartOfCall int, cfg *pul
 	}
 
 	// the call and ffmpeg are setup up, we are good to go!
-
-	//TODO replace with state machine!!
 
 	sm := &statemachine.Statemachine{Name: "Orchestrator"}
 	nodeStart := &statemachine.Node{

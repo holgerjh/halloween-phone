@@ -2,16 +2,21 @@ package player
 
 import (
 	"fmt"
-	"github.com/holgerjh/halloween-phone/pulse"
-	"github.com/holgerjh/halloween-phone/statemachine"
 	"log"
 	"os"
 	"os/exec"
+
+	"github.com/holgerjh/halloween-phone/pulse"
+	"github.com/holgerjh/halloween-phone/statemachine"
 )
 
 const ffmpegBinary = "ffmpeg"
 
-func pipeThroughFFMPEG(micFile string, file string, cfg *pulse.PulseMicConfig, startPlaying, terminate <-chan int) (<-chan int, error) {
+// PipeThroughFFMPEG uses ffmpeg to pipe file into micFile
+// Playing is started as soon as the startPlaying channel gets closed
+// Closing the terminate channel will stop playing and temrinate ffmpeg
+// cfg must contain information about the microphone such as encoding
+func PipeThroughFFMPEG(micFile string, file string, cfg *pulse.PulseMicConfig, startPlaying, terminate <-chan int) (<-chan int, error) {
 	log.Printf("Looking for %s", ffmpegBinary)
 
 	ffmpegFullPath, err := exec.LookPath(ffmpegBinary)
@@ -24,13 +29,6 @@ func pipeThroughFFMPEG(micFile string, file string, cfg *pulse.PulseMicConfig, s
 		return nil, err
 	}
 
-	/*
-		output, err := os.Create(micFile)
-		if err != nil {
-			return err
-		}
-		defer output.Close()
-	*/
 	args := assembleFFMPEGArgs(micFile, file, cfg)
 	log.Printf("Running %s with arguments %v into %s", ffmpegFullPath, args, micFile)
 	cmd := exec.Command(ffmpegFullPath, args...)

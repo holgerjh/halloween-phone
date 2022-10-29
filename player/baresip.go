@@ -1,16 +1,19 @@
 package player
 
 import (
-	"github.com/holgerjh/halloween-phone/statemachine"
 	"io"
 	"log"
 	"os"
 	"os/exec"
 	"time"
+
+	"github.com/holgerjh/halloween-phone/statemachine"
 )
 
 const bareSipBinary = "baresip"
 
+// Call handles the logic to establish a baresip call
+// It calls the default contact that is used by /dialcontact
 func Call(maxRingTime int, cancelCall <-chan int) (<-chan int, <-chan int, error) {
 	callConnected := make(chan int)
 	callTerminated := make(chan int)
@@ -165,66 +168,11 @@ func doCall(bareSipPath string, maxRingTime int, callConnected, callTerminated c
 	if err := sm.Run(); err != nil {
 		panic(err)
 	}
-
-	/*
-	   select {
-	   // happy path: ready -> established -> ended -> return
-	   case <-cancelCall:
-
-	   	log.Printf("Received request to terminate call, terminating baresip")
-	   	terminateBaresip(stdinWrite, cmd)
-
-	   case <-callstate.Ready:
-
-	   		log.Printf("Dialing")
-	   		if _, err := stdinWrite.Write([]byte("/dialcontact\n")); err != nil {
-	   			log.Printf("ERROR: Unable to communicate with baresip: %e", err)
-	   			terminateBaresip(stdinWrite, cmd)
-	   		}
-	   	}
-
-	   case <-callstate.Established:
-
-	   	log.Printf("Someone picked up!")
-	   	close(callConnected)
-
-	   case <-callstate.Ended:
-
-	   	log.Printf("call completed, terminating baresip")
-	   	terminateBaresip(stdinWrite, cmd)
-
-	   // baresip shutdown: signal end of call and leave function
-	   case <-baresipTerminated:
-
-	   	log.Printf("baresip terminated, terminating call")
-	   	close(callTerminated)
-	   	return
-
-	   // special case: call timeout
-	   case <-time.After(time.Duration(maxRingTime) * time.Second):
-
-	   	log.Printf("Noone picked up, terminating baresip")
-	   	terminateBaresip(stdinWrite, cmd)
-
-	   // special case: external request to stop call
-	   case <-cancelCall:
-
-	   		log.Printf("Received request to terminate call, terminating baresip")
-	   		terminateBaresip(stdinWrite, cmd)
-	   	}
-	*/
 }
 
 func terminateBaresip(stdinWrite *io.PipeWriter, cmd *exec.Cmd) {
 	stdinWrite.Close()
 	tryKillProcess(cmd)
-	/*
-		if _, err := stdinWrite.Write([]byte("/quit\n")); err != nil {
-			log.Printf("ERROR: Unable to communicate with baresip: %e", err)
-			tryKillProcess(cmd)
-		} else {
-			return //TODO: make sure to kill process after timeout if it ignores /quit command
-		}*/
 }
 
 const KILL_WAIT_FOR_PROCESS_PTR = 5
@@ -245,16 +193,3 @@ func tryKillProcess(cmd *exec.Cmd) {
 		log.Printf("ERROR: Failed terminating process: %e", err)
 	}
 }
-
-/*
-
-func waitForEstablishedCall(reader io.Reader, established chan<- int) {
-	scanner := bufio.NewScanner(reader)
-	for scanner.Scan() {
-		if strings.Contains(scanner.Text(), MARKER_ESTABLISHED) {
-			close(established)
-			return
-		}
-	}
-
-}*/

@@ -7,12 +7,18 @@ import (
 	"time"
 )
 
-// Track xxx
+// Track holds information about a track
 type Track struct {
-	Path         string
+	// Path points to the actual file
+	Path string
+
+	// If the track has been played, the time of its last play is stored here
 	LastPlayedAt *time.Time
 }
 
+// LoadTracks loads all files within a given folder
+// It does not check for file contents so make sure to place
+// only wave files there
 func LoadTracks(path string) ([]*Track, error) {
 	tracks := make([]*Track, 0)
 	entries, err := os.ReadDir(path)
@@ -33,48 +39,3 @@ func LoadTracks(path string) ([]*Track, error) {
 	log.Printf("Loaded the following sfx files: %+v", tracks)
 	return tracks, nil
 }
-
-/*
-func LoadTracks(path string) ([]Tracks, error) {
-	var tracks Tracks
-	if tracks == nil {
-		log.Println("making asset map")
-		tracks = make(Tracks)
-	}
-	newUnfilteredEntries, err := os.ReadDir(path)
-	if err != nil {
-		return err
-	}
-	newEntriesLookup := make(map[string]int, 0)
-	for _, v := range newUnfilteredEntries {
-		if !v.Type().IsRegular() {
-			continue
-		}
-		newEntriesLookup[filepath.Join(path, v.Name())] = 1
-	}
-
-	// delete items
-	for k := range tracks {
-		if _, ok := newEntriesLookup[k]; !ok {
-			delete(tracks, k)
-		}
-	}
-
-	// do not re-add existing items
-	for k := range tracks {
-		if _, ok := newEntriesLookup[k]; ok {
-			delete(newEntriesLookup, k)
-		}
-	}
-
-	for k := range newEntriesLookup {
-		tracks[k] = &Track{
-			Path:         k,
-			LastPlayedAt: nil,
-		}
-	}
-
-	log.Printf("Loaded the following sfx files: %+v", tracks)
-	return nil
-}
-*/

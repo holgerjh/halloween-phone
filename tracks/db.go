@@ -13,8 +13,6 @@ func (db TrackDB) HasTrack(track string) bool {
 	return ok
 }
 
-// TrackDB xxx
-
 func (db TrackDB) InsertFiltered(tracks []*Track) {
 	lookup := TracksToLookupTable(tracks)
 

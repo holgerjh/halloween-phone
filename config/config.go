@@ -2,40 +2,34 @@ package config
 
 import (
 	"fmt"
-	"github.com/holgerjh/halloween-phone/pulse"
 	"os"
+
+	"github.com/holgerjh/halloween-phone/pulse"
 
 	"gopkg.in/yaml.v2"
 )
 
-// Config foo
+// Config holds the program's configuration
 type Config struct {
-	SilenceStartOfCall int                  `yaml:"silenceStartOfCall"`
-	MinWait            int                  `yaml:"minWait"`
-	MaxWait            int                  `yaml:"maxWait"`
-	TrackCooldown      int                  `yaml:"trackCooldown"`
-	TrackFolder        string               `yaml:"trackFolder"`
-	Mic                pulse.PulseMicConfig `yaml:"mic"`
+	// How long to wait before playing sound after someone picked up the call in seconds
+	SilenceStartOfCall int `yaml:"silenceStartOfCall"`
+
+	// Delay between tracks in seconds
+	MinWait int `yaml:"minWait"`
+	MaxWait int `yaml:"maxWait"`
+
+	// Cooldown for each track before playing it again in seconds
+	TrackCooldown int `yaml:"trackCooldown"`
+
+	// Folder to load .wav files from
+	TrackFolder string `yaml:"trackFolder"`
+
+	// Virtual pulse microphone configuration
+	Mic pulse.PulseMicConfig `yaml:"mic"`
 }
 
-func stubConfig() *Config {
-	return &Config{
-		SilenceStartOfCall: 2,
-		MinWait:            10,
-		MaxWait:            40,
-		TrackCooldown:      60,
-		TrackFolder:        "/opt/halloween-phone/wav",
-		Mic: pulse.PulseMicConfig{
-			Format:   "s16le",
-			Rate:     8000,
-			Channels: 1,
-			Dir:      "",
-		},
-	}
-}
-
+// LoadConfig loads configuration a yaml file pointed to by path
 func LoadConfig(path string) (*Config, error) {
-
 	raw, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("unable to load config from %s. Make sure path exists. Error is %e", path, err)
@@ -46,5 +40,4 @@ func LoadConfig(path string) (*Config, error) {
 		return nil, err
 	}
 	return cfg, nil
-
 }

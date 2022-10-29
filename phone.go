@@ -1,10 +1,6 @@
 package main
 
 import (
-	"github.com/holgerjh/halloween-phone/config"
-	"github.com/holgerjh/halloween-phone/player"
-	"github.com/holgerjh/halloween-phone/pulse"
-	"github.com/holgerjh/halloween-phone/tracks"
 	"log"
 	"math/rand"
 	"os"
@@ -12,6 +8,11 @@ import (
 	"path/filepath"
 	"sync"
 	"time"
+
+	"github.com/holgerjh/halloween-phone/config"
+	"github.com/holgerjh/halloween-phone/player"
+	"github.com/holgerjh/halloween-phone/pulse"
+	"github.com/holgerjh/halloween-phone/tracks"
 )
 
 func main() {

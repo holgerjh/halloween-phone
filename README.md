@@ -58,7 +58,13 @@ responsibility for costs that occure using this program. Use at your own risk!**
            └───────────┘  └───────────────────┘   └───────────┘
 ```
 
+Halloween-phone takes a folder with wav files and registers a virtual pulse audio microphone. It then schedules the files to be played. When the time comes, it runs baresip and calls the default contact. When someone picks up, ffmpeg is utilized to stream the wav file into the microphone. As soon as the callee hangs up, the programs are terminated again. Halloween-phone loops forever until CTRL+C is pressed. The timeout between calls, as well as other things, can be configured to match your desired use-case (which is, of course, running a spooky party 🎉🎉🎉).
+
 ## Setup
+
+### Hardware
+
+* An physical telephone to call. I used a really old one one with pulse dialing. This had the bennefit that none of my guests could make any outgoing calls. The telephone needs to be callable. I had to solder a connector to connect the phone to my router. For german phones you should connect white and brown wires (ignore the green one if it exists), should be the same for international phones. For american phones, it should be red and green. Please double-check this against other sources before make any connections.
 
 ### Programs
 
@@ -76,7 +82,7 @@ responsibility for costs that occure using this program. Use at your own risk!**
 
     * It must register as a SIP client on startup
 
-    * It must have has a default contact it calls when `/dialcontact` is entered
+    * It must have a default contact it calls when `/dialcontact` is entered
 
     * It must use `pulse` as values for both `audio_player` and `audio_source` 
 

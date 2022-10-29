@@ -79,7 +79,7 @@ time.
 
     * Place configuration in `~/.config/halloween-phone.cfg`
 
-**For example configuration, see folder exmaple-config.**
+**For example configuration, see folder [example-config](https://github.com/holgerjh/halloween-phone/tree/main/example-config).**
 
 
 ### Prepare Tracks

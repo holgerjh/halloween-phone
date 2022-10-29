@@ -64,7 +64,7 @@ Halloween-phone takes a folder with wav files and registers a virtual pulse audi
 
 ### Hardware
 
-* An physical telephone to call. I used a really old one one with pulse dialing. This had the bennefit that none of my guests could make any outgoing calls. The telephone needs to be callable. I had to solder a connector to connect the phone to my router. For german phones you should connect white and brown wires (ignore the green one if it exists), should be the same for international phones. For american phones, it should be red and green. Please double-check this against other sources before make any connections.
+* A physical telephone to call. I used a really old one one with pulse dialing. This had the bennefit that none of my guests could make any outgoing calls. The telephone needs to be callable. I had to solder a connector to connect the phone to my router. For german phones you should connect white and brown wires (ignore the green one if it exists), should be the same for international phones. For american phones, it should be red and green. Please double-check this against other sources before make any connections.
 
 ### Programs
 
